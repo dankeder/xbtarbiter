@@ -6,7 +6,6 @@ exchanges. Currently supported exchanges are:
 
   * bitstamp.net
   * kraken.com
-  * mtgox.com
 
 
 Installation
@@ -29,10 +28,6 @@ Config file format:
         "plugins": {
             "bitstamp.net": {
                 "client_id": "<client_id>",
-                "key": "<key>",
-                "secret": "<secret>"
-            },
-            "mtgox.com": {
                 "key": "<key>",
                 "secret": "<secret>"
             },

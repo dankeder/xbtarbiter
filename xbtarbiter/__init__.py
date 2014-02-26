@@ -23,7 +23,6 @@ Options:
 
 Available Plugins:
   bitstamp
-  mtgox
   kraken
 """
 import os
@@ -39,7 +38,6 @@ from decimal import Decimal
 from datetime import datetime
 from getpass import getpass
 
-from mtgox import MtgoxPlugin, MtgoxException
 from bitstamp import BitstampPlugin, BitstampException, BitstampOrder
 from kraken import KrakenPlugin, KrakenException
 from forex import get_eurusd
@@ -343,17 +341,6 @@ def connect(enabled_plugins, cfg):
         except BitstampException as e:
             print "Failed to connect: {0}".format(str(e))
 
-    # Connect to Mtgox
-    if 'mtgox' in enabled_plugins:
-        try:
-            print "Connecting to Mtgox ..."
-            mtgox_cfg = cfg['plugins']['mtgox.com']
-            mtgox = MtgoxPlugin(key=mtgox_cfg['key'],
-                    secret=mtgox_cfg['secret'])
-            plugins.append(mtgox)
-        except MtgoxException as e:
-            print "Failed to connect: {0}".format(str(e))
-
     # Connect to Kraken
     if 'kraken' in enabled_plugins:
         try:
@@ -405,11 +392,11 @@ def main():
             raise ValueError("Value of --max-volume must be greater than or equal to {0} XBT".format(
                     MIN_TRADE_VOLUME))
         if opts['--plugins'] == 'all':
-            enabled_plugins = ['bitstamp', 'mtgox', 'kraken']
+            enabled_plugins = ['bitstamp', 'kraken']
         else:
             enabled_plugins = []
             for plugin in opts['--plugins'].split(','):
-                if plugin in ('bitstamp', 'kraken', 'mtgox'):
+                if plugin in ('bitstamp', 'kraken'):
                     enabled_plugins.append(plugin)
                 else:
                     raise ValueError("Unknown plugin: {0}".format(plugin))
